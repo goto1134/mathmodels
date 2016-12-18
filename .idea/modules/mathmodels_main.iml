@@ -9,8 +9,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.16.12" level="project" />
     <orderEntry type="library" name="Gradle: org.knowm.xchart:xchart:3.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.16.12" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.22" level="project" />
     <orderEntry type="library" name="Gradle: de.erichseifert.vectorgraphics2d:VectorGraphics2D:0.11" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.22" level="project" />
   </component>
 </module>

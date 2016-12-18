@@ -38,20 +38,20 @@ class SimpleModel
         double[] yData = new double[xData.length];
         for (int i = 0; i < xData.length; i++) {
             xData[i] = i * ((double) 100) / xData.length;
-            yData[i] = p(xData[i], 0);
+            yData[i] = density(xData[i], 0);
         }
-        XYChart chart = QuickChart.getChart(SAMPLE_CHART, "x", "p(x,t)", SERIES_NAME, xData, yData);
+        XYChart chart = QuickChart.getChart(SAMPLE_CHART, "x", "density(x,t)", SERIES_NAME, xData, yData);
         XYStyler styler = chart.getStyler();
         styler.setXAxisMin(0d).setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
     }
 
-    double p(double x, double t) {
-        return p0(x + constantSpeed * t);
+    private double density(double x, double t) {
+        return defaultDensity(x + constantSpeed * t);
     }
 
-    double p0(double x) {
+    private double defaultDensity(double x) {
         return densityParameters.getA() * Math.cos(densityParameters.getB() * x)
                 + densityParameters.getC() * Math.sin(densityParameters.getD() * x)
                 + densityParameters.getE();
@@ -67,7 +67,7 @@ class SimpleModel
             double[] yData = new double[xData.length];
 
             for (int i = 0; i < xData.length; i++) {
-                yData[i] = p(xData[i], currentTime);
+                yData[i] = density(xData[i], currentTime);
             }
 
             chartPanel.getChart().updateXYSeries(SERIES_NAME, xData, yData, null);

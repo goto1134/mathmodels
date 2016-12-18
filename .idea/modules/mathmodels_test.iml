@@ -11,8 +11,11 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="mathmodels_main" />
     <orderEntry type="library" name="Gradle: org.knowm.xchart:xchart:3.2.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.16.12" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.22" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.11" level="project" />
     <orderEntry type="library" name="Gradle: de.erichseifert.vectorgraphics2d:VectorGraphics2D:0.11" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.22" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="mathmodels_main" />
