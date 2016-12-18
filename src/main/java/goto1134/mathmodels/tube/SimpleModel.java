@@ -5,7 +5,10 @@ import org.apache.commons.math3.analysis.integration.RombergIntegrator;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.style.XYStyler;
+
+import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.getBundle;
 
 /**
  * Created by Andrew
@@ -16,6 +19,7 @@ class SimpleModel {
 
     private static final String SAMPLE_CHART = "Density";
     private static final String SERIES_NAME = "y(x)=p(x,t)";
+    private static ResourceBundle res = getBundle("tube");
 
     public static void main(String[] args) {
         // Show it
@@ -45,9 +49,8 @@ class SimpleModel {
             xData[i] = i * ((double) 100) / xData.length;
             yData[i] = density(xData[i], 0);
         }
-        XYChart chart = QuickChart.getChart(SAMPLE_CHART, "x", "density(x,t)", SERIES_NAME, xData, yData);
-        XYStyler styler = chart.getStyler();
-        styler.setXAxisMin(0d).setYAxisMin(0d);
+        XYChart chart = QuickChart.getChart(res.getString("chart_name"), "x", "p(x,t)", SERIES_NAME, xData, yData);
+        chart.getStyler().setXAxisMin(0d).setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
     }
