@@ -1,5 +1,6 @@
 package goto1134.mathmodels.tube;
 
+import goto1134.mathmodels.tube.TubeFrame.TimeSliderListener;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -10,10 +11,10 @@ import org.knowm.xchart.style.XYStyler;
  * on 13.12.2016.
  */
 class SimpleModel
-        implements TubeFrame.TimeSliderListener {
+        implements TimeSliderListener {
 
-    public static final String SAMPLE_CHART = "Sample Chart";
-    public static final String SERIES_NAME = "y(x)";
+    public static final String SAMPLE_CHART = "Density";
+    public static final String SERIES_NAME = "y(x)=p(x,t)";
 
     public static void main(String[] args) {
         // Show it
@@ -39,7 +40,7 @@ class SimpleModel
             xData[i] = i * ((double) 100) / xData.length;
             yData[i] = p(xData[i], 0);
         }
-        XYChart chart = QuickChart.getChart(SAMPLE_CHART, "X", "Y", SERIES_NAME, xData, yData);
+        XYChart chart = QuickChart.getChart(SAMPLE_CHART, "x", "p(x,t)", SERIES_NAME, xData, yData);
         XYStyler styler = chart.getStyler();
         styler.setXAxisMin(0d).setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
