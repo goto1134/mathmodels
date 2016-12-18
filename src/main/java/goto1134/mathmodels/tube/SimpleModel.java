@@ -17,17 +17,16 @@ class SimpleModel
     public static void main(String[] args) {
         // Show it
         TubeFrame frame = new TubeFrame();
-        SimpleModel model = new SimpleModel(frame);
+        new SimpleModel(frame);
         frame.setVisible(true);
     }
 
-    private final TubeFrame frame;
     private final XChartPanel<XYChart> chartPanel;
     private final double[] x_row;
-    double u0 = 3;
+    private double u0 = 3;
+    private int time = 0;
 
     SimpleModel(TubeFrame frame) {
-        this.frame = frame;
         x_row = new double[10000];
         double[] yData = new double[x_row.length];
         for (int i = 0; i < x_row.length; i++) {
@@ -38,19 +37,25 @@ class SimpleModel
         XYChart chart = QuickChart.getChart(SAMPLE_CHART, "X", "Y", SERIES_NAME, x_row, yData);
         chart.getAxisPair().overrideMinMax();
         frame.setTimeSliderListener(this);
-        chartPanel = new XChartPanel<XYChart>(chart);
+        chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
     }
 
     double p(double x, double t) {
-        return p0(x - u0 * t);
+        return p0(x + u0 * t);
     }
 
     double p0(double x) {
-        return Math.cos(0.2 * x) + 3;
+        return 0.1 * Math.cos(0.2 * x) + 3;
     }
 
+    @Override
     public void timeChanged(int time) {
+        this.time = time;
+        updateChart();
+    }
+
+    private void updateChart() {
         double[] yData = new double[x_row.length];
 
         for (int i = 0; i < x_row.length; i++) {
