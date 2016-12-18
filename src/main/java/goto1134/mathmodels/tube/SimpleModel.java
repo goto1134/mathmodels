@@ -3,6 +3,7 @@ package goto1134.mathmodels.tube;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
+import org.knowm.xchart.style.XYStyler;
 
 /**
  * Created by Andrew
@@ -22,47 +23,60 @@ class SimpleModel
     }
 
     private final XChartPanel<XYChart> chartPanel;
-    private final double[] x_row;
-    private double u0 = 3;
-    private int time = 0;
+    private final double[] xData;
+    private double constantSpeed = 3;
+    private int currentTime = 0;
+    private FunctionParameters densityParameters;
+    private FunctionParameters speedParameters;
 
     SimpleModel(TubeFrame frame) {
-        x_row = new double[10000];
-        double[] yData = new double[x_row.length];
-        for (int i = 0; i < x_row.length; i++) {
-            x_row[i] = i * ((double) 100) / x_row.length;
-            yData[i] = p(x_row[i], 0);
-        }
 
-        XYChart chart = QuickChart.getChart(SAMPLE_CHART, "X", "Y", SERIES_NAME, x_row, yData);
-        chart.getAxisPair().overrideMinMax();
         frame.setTimeSliderListener(this);
+        frame.setDensityListener(this::onDensityParametersChanged);
+        xData = new double[10000];
+        double[] yData = new double[xData.length];
+        for (int i = 0; i < xData.length; i++) {
+            xData[i] = i * ((double) 100) / xData.length;
+            yData[i] = p(xData[i], 0);
+        }
+        XYChart chart = QuickChart.getChart(SAMPLE_CHART, "X", "Y", SERIES_NAME, xData, yData);
+        XYStyler styler = chart.getStyler();
+        styler.setXAxisMin(0d).setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
     }
 
     double p(double x, double t) {
-        return p0(x + u0 * t);
+        return p0(x + constantSpeed * t);
     }
 
     double p0(double x) {
-        return 0.1 * Math.cos(0.2 * x) + 3;
+        return densityParameters.getA() * Math.cos(densityParameters.getB() * x)
+                + densityParameters.getC() * Math.sin(densityParameters.getD() * x)
+                + densityParameters.getE();
     }
 
-    @Override
-    public void timeChanged(int time) {
-        this.time = time;
+    private void onDensityParametersChanged(FunctionParameters functionParameters) {
+        densityParameters = functionParameters;
         updateChart();
     }
 
     private void updateChart() {
-        double[] yData = new double[x_row.length];
+        if (chartPanel != null) {
+            double[] yData = new double[xData.length];
 
-        for (int i = 0; i < x_row.length; i++) {
-            yData[i] = p(x_row[i], time);
+            for (int i = 0; i < xData.length; i++) {
+                yData[i] = p(xData[i], currentTime);
+            }
+
+            chartPanel.getChart().updateXYSeries(SERIES_NAME, xData, yData, null);
+            chartPanel.repaint();
         }
+    }
 
-        chartPanel.getChart().updateXYSeries(SERIES_NAME, x_row, yData, null);
-        chartPanel.repaint();
+    @Override
+    public void timeChanged(int time) {
+        this.currentTime = time;
+        updateChart();
     }
 }
