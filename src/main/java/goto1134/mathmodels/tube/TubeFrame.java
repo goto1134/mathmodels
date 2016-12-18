@@ -1,5 +1,7 @@
 package goto1134.mathmodels.tube;
 
+import lombok.Setter;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,12 +10,18 @@ import java.awt.*;
  * on 14.12.2016.
  */
 class TubeFrame extends JFrame {
-    private TimeSliderListener timeSliderListener;
+    private static final String VALUE = "value";
+
+    private VariableListener<Integer> timeSliderListener;
+    @Setter
+    private VariableListener<Double> constantSpeedListener;
     private FunctionParametersListener densityListener;
     private FunctionParametersListener speedParametersListener;
+    @Setter
+    private VariableListener<Boolean> speedTypeListener;
     private JPanel chartPanel;
     private JPanel mainPanel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPane;
     private JSlider timeSlider;
     private JFormattedTextField u_const;
     private JFormattedTextField u_a;
@@ -33,18 +41,27 @@ class TubeFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
 
-        timeSlider.addChangeListener(e -> onTimeSliderChanged());
-        p_a.addPropertyChangeListener("value", evt -> onDensityParametersChanged());
-        p_b.addPropertyChangeListener("value", evt -> onDensityParametersChanged());
-        p_c.addPropertyChangeListener("value", evt -> onDensityParametersChanged());
-        p_d.addPropertyChangeListener("value", evt -> onDensityParametersChanged());
-        p_e.addPropertyChangeListener("value", evt -> onDensityParametersChanged());
+        timeSlider.addChangeListener(evt -> onTimeSliderChanged());
+        p_a.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
+        p_b.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
+        p_c.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
+        p_d.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
+        p_e.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
+
+        u_a.addPropertyChangeListener(VALUE, evt -> onSpeedParametersChanged());
+        u_b.addPropertyChangeListener(VALUE, evt -> onSpeedParametersChanged());
+        u_c.addPropertyChangeListener(VALUE, evt -> onSpeedParametersChanged());
+        u_d.addPropertyChangeListener(VALUE, evt -> onSpeedParametersChanged());
+        u_e.addPropertyChangeListener(VALUE, evt -> onSpeedParametersChanged());
+
+        u_const.addPropertyChangeListener(VALUE, evt -> onConstantSpeedChanged());
+        tabbedPane.addChangeListener(evt -> setSpeed());
     }
 
     private void onTimeSliderChanged() {
         if (!timeSlider.getValueIsAdjusting() && timeSliderListener != null) {
             int value = timeSlider.getValue();
-            timeSliderListener.timeChanged(value);
+            timeSliderListener.valueChanged(value);
             repaint();
         }
     }
@@ -60,6 +77,29 @@ class TubeFrame extends JFrame {
         }
     }
 
+    private void onSpeedParametersChanged() {
+        if (speedParametersListener != null) {
+            FunctionParameters parameters = new FunctionParameters(((Double) u_a.getValue()),
+                    (Double) u_b.getValue(),
+                    (Double) u_c.getValue(),
+                    (Double) u_d.getValue(),
+                    (Double) u_e.getValue());
+            speedParametersListener.parametersChanged(parameters);
+        }
+    }
+
+    private void onConstantSpeedChanged() {
+        if (constantSpeedListener != null) {
+            constantSpeedListener.valueChanged(((Double) u_const.getValue()));
+        }
+    }
+
+    private void setSpeed() {
+        if (speedTypeListener != null) {
+            speedTypeListener.valueChanged(tabbedPane.getSelectedIndex() == 0);
+        }
+    }
+
     public void setDensityListener(FunctionParametersListener densityListener) {
         this.densityListener = densityListener;
         onDensityParametersChanged();
@@ -67,9 +107,10 @@ class TubeFrame extends JFrame {
 
     public void setSpeedParametersListener(FunctionParametersListener speedParametersListener) {
         this.speedParametersListener = speedParametersListener;
+        onSpeedParametersChanged();
     }
 
-    public void setTimeSliderListener(TimeSliderListener timeSliderListener) {
+    void setTimeSliderListener(VariableListener<Integer> timeSliderListener) {
         this.timeSliderListener = timeSliderListener;
         this.p_a.setValue(0.1);
         this.p_b.setValue(0.2);
@@ -82,15 +123,15 @@ class TubeFrame extends JFrame {
         this.u_c.setValue(0.3);
         this.u_d.setValue(0.4);
         this.u_e.setValue(0.5);
+        this.u_const.setValue(3.);
     }
-
 
     void setChart(JPanel chart) {
         chartPanel.add(chart, BorderLayout.CENTER);
     }
 
-    public static interface TimeSliderListener {
-        void timeChanged(int time);
+    public interface VariableListener<T> {
+        void valueChanged(T value);
     }
 
     public interface FunctionParametersListener {
