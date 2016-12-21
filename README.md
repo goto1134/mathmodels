@@ -1,0 +1,2 @@
+# mathmodels
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2350c46bf9ed4e0abefe60173e37d2af)](https://www.codacy.com/app/1134togo/mathmodels?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=goto1134/mathmodels&amp;utm_campaign=badger)
