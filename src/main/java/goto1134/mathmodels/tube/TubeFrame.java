@@ -1,16 +1,30 @@
 package goto1134.mathmodels.tube;
 
+import com.vladsch.flexmark.ast.Node;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ResourceBundle;
+//import com.vladsch.flexmark.parser.Parser;
+
 
 /**
  * Created by Andrew
  * on 14.12.2016.
  */
+@Slf4j
 class TubeFrame extends JFrame {
     private static final String VALUE = "value";
+    private static final ResourceBundle res = ResourceBundle.getBundle("tube");
 
     private VariableListener<Integer> timeSliderListener;
     @Setter
@@ -34,9 +48,10 @@ class TubeFrame extends JFrame {
     private JFormattedTextField p_c;
     private JFormattedTextField p_d;
     private JFormattedTextField p_e;
+    private JTextPane theoryPane;
 
     TubeFrame() {
-        super("Tube");
+        super(res.getString("title"));
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
@@ -124,6 +139,28 @@ class TubeFrame extends JFrame {
         this.u_d.setValue(0.4);
         this.u_e.setValue(0.5);
         this.u_const.setValue(3.);
+
+        theoryPane.setText("<html>" + getTheory() + "</html>");
+    }
+
+    private String getTheory() {
+        Parser parser = Parser.builder().build();
+
+        String input = "Error while loading resource file";
+        try {
+            Path path = Paths.get(getClass()
+                    .getClassLoader()
+                    .getResource("theory/theory_ru.md")
+                    .toURI());
+            byte[] bytes = Files.readAllBytes(path);
+            input = new String(bytes);
+        } catch (URISyntaxException | IOException e) {
+            log.error("", e);
+        }
+
+        Node document = parser.parse(input);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);  // "<p>This is <em>Sparta</em></p>\n"
     }
 
     void setChart(JPanel chart) {
