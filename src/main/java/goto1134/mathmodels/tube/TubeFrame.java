@@ -52,7 +52,6 @@ class TubeFrame extends BaseModelFrame {
     TubeFrame() {
         super(res.getString("title"));
         timeSlider.addChangeListener(evt -> onTimeSliderChanged());
-        p_a.addPropertyChangeListener(VALUE, this::onPAChanged);
 
         p_a.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
         p_b.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
@@ -105,6 +104,7 @@ class TubeFrame extends BaseModelFrame {
         if (!timeSlider.getValueIsAdjusting() && timeSliderListener != null) {
             int value = timeSlider.getValue();
             timeSliderListener.valueChanged(value);
+            setComment(res.getString("time"));
             repaint();
         }
     }
@@ -139,7 +139,13 @@ class TubeFrame extends BaseModelFrame {
 
     private void setSpeed() {
         if (speedTypeListener != null) {
-            speedTypeListener.valueChanged(tabbedPane.getSelectedIndex() == 0);
+            boolean isConstant = tabbedPane.getSelectedIndex() == 0;
+            speedTypeListener.valueChanged(isConstant);
+            if (isConstant) {
+                setComment(res.getString("const"));
+            } else {
+                setComment(res.getString("variable"));
+            }
         }
     }
 

@@ -48,7 +48,7 @@ class SimpleModel {
             xData[i] = i * ((double) 100) / xData.length;
             yData[i] = density(xData[i], 0);
         }
-        XYChart chart = QuickChart.getChart(res.getString("title"), "x", "p(x,t)", SERIES_NAME, xData, yData);
+        XYChart chart = QuickChart.getChart(res.getString("chart_name"), "Расстояние", "Плотность", SERIES_NAME, xData, yData);
         chart.getStyler().setXAxisMin(0d).setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
