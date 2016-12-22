@@ -1,9 +1,9 @@
 package goto1134.mathmodels.grunt;
 
+import goto1134.mathmodels.base.BaseModelFrame;
 import lombok.Setter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ResourceBundle;
 
 import static goto1134.mathmodels.grunt.GruntModel.DEFAULT_PARAMETERS;
@@ -12,27 +12,23 @@ import static goto1134.mathmodels.grunt.GruntModel.DEFAULT_PARAMETERS;
  * Created by Andrew
  * on 21.12.2016.
  */
-class GruntFrame extends JFrame {
+class GruntFrame extends BaseModelFrame {
     private static final String VALUE = "value";
     private static final ResourceBundle res = ResourceBundle.getBundle("tube");
 
-    private JPanel mainPanel;
+    private JPanel settings;
     private JSlider time_step;
     private JSlider pollution_intensivity;
     private JSlider barrier_intensivity;
     private JSlider barrier_width;
     private JSlider barrier_distanse;
-    private JPanel chartPanel;
 
     @Setter
     private ParametersChangeListener parametersChangeListener;
 
     GruntFrame() {
         super(res.getString("title"));
-        setContentPane(mainPanel);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        pack();
+        setSettingsComponent(settings);
 
         time_step.setValue(DEFAULT_PARAMETERS.getMax_t());
         pollution_intensivity.setValue(DEFAULT_PARAMETERS.getC());
@@ -56,10 +52,6 @@ class GruntFrame extends JFrame {
                     barrier_distanse.getValue());
             parametersChangeListener.onParametersChanged(parameters);
         }
-    }
-
-    void setChart(JPanel chart) {
-        chartPanel.add(chart, BorderLayout.CENTER);
     }
 
 

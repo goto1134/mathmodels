@@ -3,18 +3,18 @@ package goto1134.mathmodels.tube;
 import com.vladsch.flexmark.ast.Node;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import goto1134.mathmodels.base.BaseModelFrame;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
-import java.awt.*;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
-//import com.vladsch.flexmark.parser.Parser;
 
 
 /**
@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * on 14.12.2016.
  */
 @Slf4j
-class TubeFrame extends JFrame {
+class TubeFrame extends BaseModelFrame {
     private static final String VALUE = "value";
     private static final ResourceBundle res = ResourceBundle.getBundle("tube");
 
@@ -33,8 +33,6 @@ class TubeFrame extends JFrame {
     private FunctionParametersListener speedParametersListener;
     @Setter
     private VariableListener<Boolean> speedTypeListener;
-    private JPanel chartPanel;
-    private JPanel mainPanel;
     private JTabbedPane tabbedPane;
     private JSlider timeSlider;
     private JFormattedTextField u_const;
@@ -48,15 +46,14 @@ class TubeFrame extends JFrame {
     private JFormattedTextField p_c;
     private JFormattedTextField p_d;
     private JFormattedTextField p_e;
-    private JTextPane theoryPane;
+    private JPanel settings;
+
 
     TubeFrame() {
         super(res.getString("title"));
-        setContentPane(mainPanel);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        pack();
-
         timeSlider.addChangeListener(evt -> onTimeSliderChanged());
+        p_a.addPropertyChangeListener(VALUE, this::onPAChanged);
+
         p_a.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
         p_b.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
         p_c.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
@@ -85,7 +82,23 @@ class TubeFrame extends JFrame {
         this.u_e.setValue(0.5);
         this.u_const.setValue(3.);
 
+        setSettingsComponent(settings);
+
+        JTextPane theoryPane = new JTextPane();
+        theoryPane.setContentType("text/html");
         theoryPane.setText("<html>" + getTheory() + "</html>");
+        setTheoryComponent(theoryPane);
+    }
+
+    private void onPAChanged(PropertyChangeEvent event) {
+        if (event.getOldValue() != null && event.getNewValue() != null) {
+            if (((Double) event.getNewValue()) > ((Double) event.getOldValue())) {
+                setComment("ss");
+            } else {
+                setComment("mm");
+            }
+
+        }
     }
 
     private void onTimeSliderChanged() {
@@ -162,10 +175,6 @@ class TubeFrame extends JFrame {
         Node document = parser.parse(input);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         return renderer.render(document);  // "<p>This is <em>Sparta</em></p>\n"
-    }
-
-    void setChart(JPanel chart) {
-        chartPanel.add(chart, BorderLayout.CENTER);
     }
 
     public interface VariableListener<T> {
