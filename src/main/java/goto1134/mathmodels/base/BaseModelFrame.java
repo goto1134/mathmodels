@@ -12,7 +12,7 @@ public abstract class BaseModelFrame extends JFrame {
     private JPanel settingsPanel;
     private JPanel theoryPanel;
     private JPanel mainPanel;
-    private JTextArea commentArea;
+    private JTextPane commentArea;
 
     protected BaseModelFrame(String aTitle) {
         super(aTitle);

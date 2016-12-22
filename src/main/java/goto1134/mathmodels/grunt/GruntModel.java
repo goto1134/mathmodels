@@ -17,13 +17,6 @@ class GruntModel {
     private static final String SERIES1_NAME = res.getString("pollution");
     private static final String SERIES2_NAME = res.getString("barrier");
     private static final String SERIES3_NAME = res.getString("result_pollution");
-
-    public static void main(String[] args) {
-        // Show it
-        GruntFrame frame = new GruntFrame();
-        new GruntModel(frame);
-        frame.setVisible(true);
-    }
     private final XChartPanel<XYChart> chartPanel;
     private FunctionParameters parameters = DEFAULT_PARAMETERS;
 
@@ -31,13 +24,20 @@ class GruntModel {
 
         frame.setParametersChangeListener(this::onParametersChanged);
 
-        XYChart chart = QuickChart.getChart("chart_name", "x", "p(x,t)", SERIES1_NAME, new double[]{1, 2}, new double[]{1, 2});
+        XYChart chart = QuickChart.getChart(res.getString("title"), "Время", "Уровень загрящнения", SERIES1_NAME, new double[]{1, 2}, new double[]{1, 2});
         chart.addSeries(SERIES2_NAME, new double[]{1, 2}, new double[]{1, 2});
         chart.addSeries(SERIES3_NAME, new double[]{1, 2}, new double[]{1, 2});
         chart.getStyler().setXAxisMin(0d).setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
         updateChart();
+    }
+
+    public static void main(String[] args) {
+        // Show it
+        GruntFrame frame = new GruntFrame();
+        new GruntModel(frame);
+        frame.setVisible(true);
     }
 
     private void updateChart() {

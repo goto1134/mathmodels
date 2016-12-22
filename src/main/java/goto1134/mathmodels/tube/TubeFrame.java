@@ -143,12 +143,12 @@ class TubeFrame extends BaseModelFrame {
         }
     }
 
-    public void setDensityListener(FunctionParametersListener densityListener) {
+    void setDensityListener(FunctionParametersListener densityListener) {
         this.densityListener = densityListener;
         onDensityParametersChanged();
     }
 
-    public void setSpeedParametersListener(FunctionParametersListener speedParametersListener) {
+    void setSpeedParametersListener(FunctionParametersListener speedParametersListener) {
         this.speedParametersListener = speedParametersListener;
         onSpeedParametersChanged();
     }
@@ -174,7 +174,7 @@ class TubeFrame extends BaseModelFrame {
 
         Node document = parser.parse(input);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
-        return renderer.render(document);  // "<p>This is <em>Sparta</em></p>\n"
+        return renderer.render(document);
     }
 
     public interface VariableListener<T> {
