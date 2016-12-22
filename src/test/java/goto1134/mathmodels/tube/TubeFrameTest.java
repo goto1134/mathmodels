@@ -47,7 +47,7 @@ public class TubeFrameTest {
 
         Parser parser = Parser.builder(options).build();
         HtmlRenderer renderer = HtmlRenderer.builder(options).build();
-        String input = new String(Files.readAllBytes(Paths.get("theory/theory_ru.md")));
+        String input = new String(Files.readAllBytes(Paths.get("theory/tube_theory_ru.md")));
 
         Node document = parser.parse(input);
         renderer.render(document);  // "<p>This is <em>Sparta</em></p>\n"

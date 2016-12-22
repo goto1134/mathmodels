@@ -15,18 +15,10 @@ import static java.util.ResourceBundle.getBundle;
  * on 13.12.2016.
  */
 @Slf4j
-class SimpleModel {
+class TubeModel {
 
-    private static final String SERIES_NAME = "y(x)=p(x,t)";
+    private static final String SERIES_NAME = "Плотность потока";
     private static ResourceBundle res = getBundle("tube");
-
-    public static void main(String[] args) {
-        // Show it
-        TubeFrame frame = new TubeFrame();
-        new SimpleModel(frame);
-        frame.setVisible(true);
-    }
-
     private final XChartPanel<XYChart> chartPanel;
     private final double[] xData;
     private double constantSpeed = 3;
@@ -35,7 +27,7 @@ class SimpleModel {
     private FunctionParameters speedParameters;
     private boolean isSpeedConstant = true;
 
-    private SimpleModel(TubeFrame frame) {
+    private TubeModel(TubeFrame frame) {
 
         frame.setTimeSliderListener(this::onTimeChanged);
         frame.setDensityListener(this::onDensityParametersChanged);
@@ -52,6 +44,13 @@ class SimpleModel {
         chart.getStyler().setXAxisMin(0d).setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
+    }
+
+    public static void main(String[] args) {
+        // Show it
+        TubeFrame frame = new TubeFrame();
+        new TubeModel(frame);
+        frame.setVisible(true);
     }
 
     private double density(double coordinate, double time) {

@@ -8,7 +8,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
-import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -89,17 +88,6 @@ class TubeFrame extends BaseModelFrame {
         setTheoryComponent(theoryPane);
     }
 
-    private void onPAChanged(PropertyChangeEvent event) {
-        if (event.getOldValue() != null && event.getNewValue() != null) {
-            if (((Double) event.getNewValue()) > ((Double) event.getOldValue())) {
-                setComment("ss");
-            } else {
-                setComment("mm");
-            }
-
-        }
-    }
-
     private void onTimeSliderChanged() {
         if (!timeSlider.getValueIsAdjusting() && timeSliderListener != null) {
             int value = timeSlider.getValue();
@@ -170,7 +158,7 @@ class TubeFrame extends BaseModelFrame {
         try {
             Path path = Paths.get(getClass()
                     .getClassLoader()
-                    .getResource("theory/theory_ru.md")
+                    .getResource("theory/tube_theory_ru.md")
                     .toURI());
             byte[] bytes = Files.readAllBytes(path);
             input = new String(bytes);
