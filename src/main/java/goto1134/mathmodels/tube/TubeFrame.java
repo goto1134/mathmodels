@@ -8,12 +8,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 
 /**
@@ -154,17 +150,11 @@ class TubeFrame extends BaseModelFrame {
     private String getTheory() {
         Parser parser = Parser.builder().build();
 
-        String input = "Error while loading resource file";
-        try {
-            Path path = Paths.get(getClass()
-                    .getClassLoader()
-                    .getResource("theory/tube_theory_ru.md")
-                    .toURI());
-            byte[] bytes = Files.readAllBytes(path);
-            input = new String(bytes);
-        } catch (URISyntaxException | IOException e) {
-            log.error("", e);
-        }
+        String input = new Scanner(getClass()
+                .getClassLoader()
+                .getResourceAsStream("theory/tube_theory_ru.md"),"UTF-8")
+                .useDelimiter("\\Z")
+                .next();
 
         Node document = parser.parse(input);
         HtmlRenderer renderer = HtmlRenderer.builder().build();

@@ -33,7 +33,6 @@ public abstract class BaseModelFrame extends JFrame {
         settingsPanel.add(settingsComponent);
         settingsPanel.revalidate();
         settingsPanel.repaint();
-
     }
 
     protected void setTheoryComponent(Component theoryComponent) {
