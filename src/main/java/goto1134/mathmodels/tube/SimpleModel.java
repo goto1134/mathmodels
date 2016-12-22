@@ -17,7 +17,6 @@ import static java.util.ResourceBundle.getBundle;
 @Slf4j
 class SimpleModel {
 
-    private static final String SAMPLE_CHART = "Density";
     private static final String SERIES_NAME = "y(x)=p(x,t)";
     private static ResourceBundle res = getBundle("tube");
 

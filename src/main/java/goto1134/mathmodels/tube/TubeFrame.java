@@ -71,6 +71,21 @@ class TubeFrame extends JFrame {
 
         u_const.addPropertyChangeListener(VALUE, evt -> onConstantSpeedChanged());
         tabbedPane.addChangeListener(evt -> setSpeed());
+
+        this.p_a.setValue(0.1);
+        this.p_b.setValue(0.2);
+        this.p_c.setValue(0.3);
+        this.p_d.setValue(0.4);
+        this.p_e.setValue(0.5);
+
+        this.u_a.setValue(0.1);
+        this.u_b.setValue(0.2);
+        this.u_c.setValue(0.3);
+        this.u_d.setValue(0.4);
+        this.u_e.setValue(0.5);
+        this.u_const.setValue(3.);
+
+        theoryPane.setText("<html>" + getTheory() + "</html>");
     }
 
     private void onTimeSliderChanged() {
@@ -127,20 +142,6 @@ class TubeFrame extends JFrame {
 
     void setTimeSliderListener(VariableListener<Integer> timeSliderListener) {
         this.timeSliderListener = timeSliderListener;
-        this.p_a.setValue(0.1);
-        this.p_b.setValue(0.2);
-        this.p_c.setValue(0.3);
-        this.p_d.setValue(0.4);
-        this.p_e.setValue(0.5);
-
-        this.u_a.setValue(0.1);
-        this.u_b.setValue(0.2);
-        this.u_c.setValue(0.3);
-        this.u_d.setValue(0.4);
-        this.u_e.setValue(0.5);
-        this.u_const.setValue(3.);
-
-        theoryPane.setText("<html>" + getTheory() + "</html>");
     }
 
     private String getTheory() {
