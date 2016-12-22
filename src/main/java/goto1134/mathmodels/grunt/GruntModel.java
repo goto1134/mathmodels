@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  */
 class GruntModel {
 
-    public static final FunctionParameters DEFAULT_PARAMETERS = new FunctionParameters(100, 100, 50, 8, 40);
+    static final FunctionParameters DEFAULT_PARAMETERS = new FunctionParameters(100, 100, 50, 8, 40);
     private static final ResourceBundle res = ResourceBundle.getBundle("grunt");
     private static final String SERIES1_NAME = res.getString("pollution");
     private static final String SERIES2_NAME = res.getString("barrier");
@@ -27,7 +27,7 @@ class GruntModel {
     private final XChartPanel<XYChart> chartPanel;
     private FunctionParameters parameters = DEFAULT_PARAMETERS;
 
-    public GruntModel(GruntFrame frame) {
+    private GruntModel(GruntFrame frame) {
 
         frame.setParametersChangeListener(this::onParametersChanged);
 
