@@ -6,12 +6,14 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 /**
  * @author Andrew Yefanov.
  * @since 22.12.2016.
  */
 public abstract class BaseModelFrame extends JFrame {
+    private static ResourceBundle res = ResourceBundle.getBundle("base");
     @Setter(AccessLevel.PROTECTED)
     @Getter(AccessLevel.PROTECTED)
     private boolean isExerciseMode = false;
@@ -33,6 +35,13 @@ public abstract class BaseModelFrame extends JFrame {
 
     protected void onModeChanged(boolean aValue) {
         isExerciseMode = aValue;
+        if(aValue)
+        {
+            exerciseButton.setText(res.getString("example"));
+        }
+        else {
+            exerciseButton.setText(res.getString("exercise"));
+        }
         if (exerciseRequestListener != null) {
             exerciseRequestListener.setExerciseMode(aValue);
         }
