@@ -43,7 +43,6 @@ class TubeFrame extends BaseModelFrame {
     private JFormattedTextField p_e;
     private JPanel settings;
 
-
     TubeFrame() {
         super(res.getString("title"));
         timeSlider.addChangeListener(evt -> onTimeSliderChanged());
@@ -51,6 +50,7 @@ class TubeFrame extends BaseModelFrame {
         p_a.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
         p_b.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
         p_c.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
+        p_c.addPropertyChangeListener(VALUE, evt -> onPCParamChanged());
         p_d.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
         p_e.addPropertyChangeListener(VALUE, evt -> onDensityParametersChanged());
 
@@ -104,6 +104,12 @@ class TubeFrame extends BaseModelFrame {
         }
     }
 
+    private void onPCParamChanged() {
+        if (isExerciseMode() && ((Double) p_c.getValue()) == 0) {
+            JOptionPane.showMessageDialog(this, "Достигнута целевая плотность потока");
+        }
+    }
+
     private void onSpeedParametersChanged() {
         if (speedParametersListener != null) {
             FunctionParameters parameters = new FunctionParameters(((Double) u_a.getValue()),
@@ -133,6 +139,39 @@ class TubeFrame extends BaseModelFrame {
         }
     }
 
+    private String getTheory() {
+        Parser parser = Parser.builder().build();
+
+        String input = new Scanner(getClass()
+                .getClassLoader()
+                .getResourceAsStream("theory/tube_theory_ru.md"), "UTF-8")
+                .useDelimiter("\\Z")
+                .next();
+
+        Node document = parser.parse(input);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);
+    }
+
+    @Override
+    protected void onModeChanged(boolean aValue) {
+        p_a.setValue(0.1);
+        p_b.setValue(0.2);
+        p_c.setValue(0.3);
+        p_d.setValue(0.4);
+        p_e.setValue(0.5);
+
+        p_a.setEditable(!aValue);
+        p_b.setEditable(!aValue);
+        p_d.setEditable(!aValue);
+        p_e.setEditable(!aValue);
+
+        super.onModeChanged(aValue);
+        if (aValue) {
+            JOptionPane.showMessageDialog(this, "Добейтесь того, чтобы в любой момент времени\n Плотность потока была >=0.4");
+        }
+    }
+
     void setDensityListener(FunctionParametersListener densityListener) {
         this.densityListener = densityListener;
         onDensityParametersChanged();
@@ -145,20 +184,6 @@ class TubeFrame extends BaseModelFrame {
 
     void setTimeSliderListener(VariableListener<Integer> timeSliderListener) {
         this.timeSliderListener = timeSliderListener;
-    }
-
-    private String getTheory() {
-        Parser parser = Parser.builder().build();
-
-        String input = new Scanner(getClass()
-                .getClassLoader()
-                .getResourceAsStream("theory/tube_theory_ru.md"),"UTF-8")
-                .useDelimiter("\\Z")
-                .next();
-
-        Node document = parser.parse(input);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        return renderer.render(document);
     }
 
     public interface VariableListener<T> {

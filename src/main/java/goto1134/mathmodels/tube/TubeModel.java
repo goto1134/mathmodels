@@ -1,5 +1,6 @@
 package goto1134.mathmodels.tube;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.analysis.integration.RombergIntegrator;
 import org.knowm.xchart.QuickChart;
@@ -23,6 +24,7 @@ class TubeModel {
     private final double[] xData;
     private double constantSpeed = 3;
     private int currentTime = 0;
+    @Setter
     private FunctionParameters densityParameters;
     private FunctionParameters speedParameters;
     private boolean isSpeedConstant = true;

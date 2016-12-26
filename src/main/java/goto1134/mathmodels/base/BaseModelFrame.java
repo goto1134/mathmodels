@@ -1,5 +1,7 @@
 package goto1134.mathmodels.base;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
@@ -10,12 +12,15 @@ import java.awt.*;
  * @since 22.12.2016.
  */
 public abstract class BaseModelFrame extends JFrame {
+    @Setter(AccessLevel.PROTECTED)
+    @Getter(AccessLevel.PROTECTED)
+    private boolean isExerciseMode = false;
     private JPanel chartPanel;
     private JPanel settingsPanel;
     private JPanel theoryPanel;
     private JPanel mainPanel;
     private JTextPane commentArea;
-    private JTabbedPane modePanel;
+    private JButton exerciseButton;
     @Setter
     private ExerciseModeListener exerciseRequestListener;
 
@@ -23,11 +28,14 @@ public abstract class BaseModelFrame extends JFrame {
         super(aTitle);
         setContentPane(mainPanel);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        modePanel.addChangeListener(e -> {
-            if (exerciseRequestListener != null) {
-                exerciseRequestListener.setExerciseMode(modePanel.isEnabledAt(1));
-            }
-        });
+        exerciseButton.addActionListener(e -> onModeChanged(!isExerciseMode));
+    }
+
+    protected void onModeChanged(boolean aValue) {
+        isExerciseMode = aValue;
+        if (exerciseRequestListener != null) {
+            exerciseRequestListener.setExerciseMode(aValue);
+        }
     }
 
     public void setChart(JPanel chart) {

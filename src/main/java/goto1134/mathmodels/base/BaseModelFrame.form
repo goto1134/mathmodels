@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <tabbedpane id="cc3b0" binding="modePanel">
+      <tabbedpane id="cc3b0">
         <constraints border-constraint="Center"/>
         <properties>
           <maximumSize width="3333333" height="3333333"/>
@@ -70,7 +70,7 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="ac479" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="ac479" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <splitpane position="left"/>
@@ -78,44 +78,22 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <tabbedpane id="36122">
+                      <grid id="22c28" binding="settingsPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="200" height="200"/>
-                          </grid>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                         <border type="none"/>
-                        <children>
-                          <grid id="bc9e6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                            <margin top="0" left="0" bottom="0" right="0"/>
-                            <constraints>
-                              <tabbedpane title-resource-bundle="base" title-key="example"/>
-                            </constraints>
-                            <properties/>
-                            <border type="none"/>
-                            <children>
-                              <grid id="22c28" binding="settingsPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-                                <constraints>
-                                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                                </constraints>
-                                <properties/>
-                                <border type="none"/>
-                                <children/>
-                              </grid>
-                            </children>
-                          </grid>
-                          <grid id="35cf" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                            <margin top="0" left="0" bottom="0" right="0"/>
-                            <constraints>
-                              <tabbedpane title-resource-bundle="base" title-key="exercise"/>
-                            </constraints>
-                            <properties/>
-                            <border type="none"/>
-                            <children/>
-                          </grid>
-                        </children>
-                      </tabbedpane>
+                        <children/>
+                      </grid>
+                      <component id="f8eb7" class="javax.swing.JButton" binding="exerciseButton" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text resource-bundle="base" key="exercise"/>
+                        </properties>
+                      </component>
                     </children>
                   </grid>
                 </children>
