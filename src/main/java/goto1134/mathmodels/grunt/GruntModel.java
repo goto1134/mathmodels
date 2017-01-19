@@ -1,12 +1,13 @@
 package goto1134.mathmodels.grunt;
 
-import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+
+import static org.knowm.xchart.QuickChart.getChart;
 
 /**
  * Created by Andrew
@@ -35,10 +36,13 @@ class GruntModel {
 
         frame.setParametersChangeListener(this::onParametersChanged);
 
-        XYChart chart = QuickChart.getChart(res.getString("title"), "Время", "Уровень загрящнения", POLLUTION, new double[]{1, 2}, new double[]{1, 2});
+        XYChart chart = getChart(res.getString("title"), "Время", "Уровень загрящнения", POLLUTION,
+                                 new double[]{1, 2}, new double[]{1, 2});
         chart.addSeries(BARRIER, new double[]{1, 2}, new double[]{1, 2});
         chart.addSeries(RESULT_POLLUTION, new double[]{1, 2}, new double[]{1, 2});
-        chart.getStyler().setXAxisMin(0d).setYAxisMin(0d);
+        chart.getStyler()
+             .setXAxisMin(0d)
+             .setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
         frame.setExerciseRequestListener(this::onExerciseMode);
@@ -78,15 +82,18 @@ class GruntModel {
 
         }
 
-        chartPanel.getChart().updateXYSeries(POLLUTION, xData, pollution, null);
-        chartPanel.getChart().updateXYSeries(BARRIER, xData, barrier, null);
-        chartPanel.getChart().updateXYSeries(RESULT_POLLUTION, xData, resultPollution, null);
+        chartPanel.getChart()
+                  .updateXYSeries(POLLUTION, xData, pollution, null);
+        chartPanel.getChart()
+                  .updateXYSeries(BARRIER, xData, barrier, null);
+        chartPanel.getChart()
+                  .updateXYSeries(RESULT_POLLUTION, xData, resultPollution, null);
         chartPanel.repaint();
 
-        if(isExerciseMode)
-        {
-            if(Arrays.stream(resultPollution).skip(20).allMatch(value -> value < 15))
-            {
+        if (isExerciseMode) {
+            if (Arrays.stream(resultPollution)
+                      .skip(20)
+                      .allMatch(value -> value < 15)) {
                 JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Результат достигнут");
             }
         }

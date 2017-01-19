@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -17,7 +18,8 @@ import java.util.Scanner;
  * on 14.12.2016.
  */
 @Slf4j
-class TubeFrame extends BaseModelFrame {
+class TubeFrame
+        extends BaseModelFrame {
     private static final String VALUE = "value";
     private static final ResourceBundle res = ResourceBundle.getBundle("tube");
 
@@ -79,6 +81,7 @@ class TubeFrame extends BaseModelFrame {
         setSettingsComponent(settings);
 
         JTextPane theoryPane = new JTextPane();
+        theoryPane.setFont(new Font(Font.SERIF, Font.PLAIN, 30));
         theoryPane.setContentType("text/html");
         theoryPane.setText("<html>" + getTheory() + "</html>");
         setTheoryComponent(theoryPane);
@@ -96,10 +99,10 @@ class TubeFrame extends BaseModelFrame {
     private void onDensityParametersChanged() {
         if (densityListener != null) {
             FunctionParameters parameters = new FunctionParameters(((Double) p_a.getValue()),
-                    (Double) p_b.getValue(),
-                    (Double) p_c.getValue(),
-                    (Double) p_d.getValue(),
-                    (Double) p_e.getValue());
+                                                                   (Double) p_b.getValue(),
+                                                                   (Double) p_c.getValue(),
+                                                                   (Double) p_d.getValue(),
+                                                                   (Double) p_e.getValue());
             densityListener.parametersChanged(parameters);
         }
     }
@@ -113,10 +116,10 @@ class TubeFrame extends BaseModelFrame {
     private void onSpeedParametersChanged() {
         if (speedParametersListener != null) {
             FunctionParameters parameters = new FunctionParameters(((Double) u_a.getValue()),
-                    (Double) u_b.getValue(),
-                    (Double) u_c.getValue(),
-                    (Double) u_d.getValue(),
-                    (Double) u_e.getValue());
+                                                                   (Double) u_b.getValue(),
+                                                                   (Double) u_c.getValue(),
+                                                                   (Double) u_d.getValue(),
+                                                                   (Double) u_e.getValue());
             speedParametersListener.parametersChanged(parameters);
         }
     }
@@ -140,16 +143,18 @@ class TubeFrame extends BaseModelFrame {
     }
 
     private String getTheory() {
-        Parser parser = Parser.builder().build();
+        Parser parser = Parser.builder()
+                              .build();
 
         String input = new Scanner(getClass()
-                .getClassLoader()
-                .getResourceAsStream("theory/tube_theory_ru.md"), "UTF-8")
+                                           .getClassLoader()
+                                           .getResourceAsStream("theory/tube_theory_ru.md"), "UTF-8")
                 .useDelimiter("\\Z")
                 .next();
 
         Node document = parser.parse(input);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder()
+                                            .build();
         return renderer.render(document);
     }
 
@@ -168,7 +173,8 @@ class TubeFrame extends BaseModelFrame {
 
         super.onModeChanged(aValue);
         if (aValue) {
-            JOptionPane.showMessageDialog(this, "Добейтесь того, чтобы в любой момент времени\n Плотность потока была >=0.4");
+            JOptionPane.showMessageDialog(this,
+                                          "Добейтесь того, чтобы в любой момент времени\n Плотность потока была >=0.4");
         }
     }
 

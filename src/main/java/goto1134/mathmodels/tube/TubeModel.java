@@ -3,13 +3,13 @@ package goto1134.mathmodels.tube;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.analysis.integration.RombergIntegrator;
-import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
 import java.util.ResourceBundle;
 
 import static java.util.ResourceBundle.getBundle;
+import static org.knowm.xchart.QuickChart.getChart;
 
 /**
  * Created by Andrew
@@ -20,6 +20,13 @@ class TubeModel {
 
     private static final String SERIES_NAME = "Плотность потока";
     private static ResourceBundle res = getBundle("tube");
+
+    public static void main(String[] args) {
+        TubeFrame frame = new TubeFrame();
+        new TubeModel(frame);
+        frame.setVisible(true);
+    }
+
     private final XChartPanel<XYChart> chartPanel;
     private final double[] xData;
     private double constantSpeed = 3;
@@ -42,17 +49,12 @@ class TubeModel {
             xData[i] = i * ((double) 100) / xData.length;
             yData[i] = density(xData[i], 0);
         }
-        XYChart chart = QuickChart.getChart(res.getString("chart_name"), "Расстояние", "Плотность", SERIES_NAME, xData, yData);
-        chart.getStyler().setXAxisMin(0d).setYAxisMin(0d);
+        XYChart chart = getChart(res.getString("chart_name"), "Расстояние", "Плотность", SERIES_NAME, xData, yData);
+        chart.getStyler()
+             .setXAxisMin(0d)
+             .setYAxisMin(0d);
         chartPanel = new XChartPanel<>(chart);
         frame.setChart(chartPanel);
-    }
-
-    public static void main(String[] args) {
-        // Show it
-        TubeFrame frame = new TubeFrame();
-        new TubeModel(frame);
-        frame.setVisible(true);
     }
 
     private double density(double coordinate, double time) {
@@ -90,7 +92,8 @@ class TubeModel {
                 yData[i] = density(xData[i], currentTime);
             }
 
-            chartPanel.getChart().updateXYSeries(SERIES_NAME, xData, yData, null);
+            chartPanel.getChart()
+                      .updateXYSeries(SERIES_NAME, xData, yData, null);
             chartPanel.repaint();
         }
     }

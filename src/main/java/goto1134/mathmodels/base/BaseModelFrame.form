@@ -2,9 +2,11 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="goto1134.mathmodels.base.BaseModelFrame">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="600" height="600"/>
     </constraints>
-    <properties/>
+    <properties>
+      <minimumSize width="400" height="300"/>
+    </properties>
     <border type="none"/>
     <children>
       <tabbedpane id="cc3b0">
@@ -58,16 +60,33 @@
                         <border type="none"/>
                         <children/>
                       </grid>
-                      <component id="83850" class="javax.swing.JTextPane" binding="commentArea">
+                      <grid id="b511d" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
                         <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="50"/>
-                          </grid>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                         </constraints>
-                        <properties>
-                          <editable value="false"/>
-                        </properties>
-                      </component>
+                        <properties/>
+                        <border type="line" title="Подсказка:">
+                          <font/>
+                        </border>
+                        <children>
+                          <component id="83850" class="javax.swing.JTextPane" binding="commentArea">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="2" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="50"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <doubleBuffered value="false"/>
+                              <editable value="false"/>
+                              <enabled value="true"/>
+                              <focusCycleRoot value="false"/>
+                              <focusable value="false"/>
+                              <selectedTextColor color="-1513240"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
                     </children>
                   </grid>
                   <grid id="ac479" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

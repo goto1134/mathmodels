@@ -15,7 +15,8 @@ class GruntTheory {
     private JPanel imagePanel;
 
     GruntTheory() {
-        URL barrierIMG = getClass().getClassLoader().getResource("theory/barrier.png");
+        URL barrierIMG = getClass().getClassLoader()
+                                   .getResource("theory/barrier.png");
         ImageIcon imageIcon = new ImageIcon(barrierIMG);
         imagePanel.add(new JLabel(imageIcon));
     }

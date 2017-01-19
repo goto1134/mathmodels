@@ -12,7 +12,8 @@ import java.util.ResourceBundle;
  * @author Andrew Yefanov.
  * @since 22.12.2016.
  */
-public abstract class BaseModelFrame extends JFrame {
+public abstract class BaseModelFrame
+        extends JFrame {
     private static ResourceBundle res = ResourceBundle.getBundle("base");
     @Setter(AccessLevel.PROTECTED)
     @Getter(AccessLevel.PROTECTED)
@@ -35,11 +36,9 @@ public abstract class BaseModelFrame extends JFrame {
 
     protected void onModeChanged(boolean aValue) {
         isExerciseMode = aValue;
-        if(aValue)
-        {
+        if (aValue) {
             exerciseButton.setText(res.getString("example"));
-        }
-        else {
+        } else {
             exerciseButton.setText(res.getString("exercise"));
         }
         if (exerciseRequestListener != null) {
