@@ -86,7 +86,7 @@
           </grid>
         </constraints>
         <properties>
-          <maximum value="200"/>
+          <maximum value="50"/>
           <paintLabels value="true"/>
         </properties>
       </component>
